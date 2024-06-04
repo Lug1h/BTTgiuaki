@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f5f5f5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quản lý thông tin nhân viên"
+            android:textSize="24sp"
+            android:textColor="#333"
+            android:paddingBottom="24dp"/>
+
+        <EditText
+            android:id="@+id/etEmployeeId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mã nhân viên"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background" />
+
+        <EditText
+            android:id="@+id/etEmployeeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Họ và tên"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etEmployeePosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chức vụ (tùy chọn)"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etEmployeeEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etEmployeePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="16dp" />
+
+        <ImageButton
+            android:id="@+id/Avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <EditText
+            android:id="@+id/etEmployeeAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Địa chỉ"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_background"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnSaveEmployee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#6200EE"
+            android:text="Lưu thông tin"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

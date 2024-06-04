@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="#f5f5f5">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="126dp"
+        android:paddingBottom="24dp"
+        android:text="Quản lý danh bạ liên lạc"
+        android:textColor="#333"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnManageDepartments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#6200EE"
+        android:text="Quản lý thông tin đơn vị"
+        android:textAlignment="center"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/btnManageEmployees"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#6200EE"
+        android:text="Quản lý thông tin nhân viên"
+        android:textAlignment="center"
+        android:textColor="#fff" />
+
+    <Button
+        android:id="@+id/btnSearchInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#6200EE"
+        android:text="Tìm kiếm thông tin"
+        android:textAlignment="center"
+        android:textColor="#fff" />
+</LinearLayout>

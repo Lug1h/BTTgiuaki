@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "789703844705",
+    "firebase_url": "https://qldanhba-800a2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "qldanhba-800a2",
+    "storage_bucket": "qldanhba-800a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789703844705:android:56a449561b024fe0ca1b20",
+        "android_client_info": {
+          "package_name": "com.example.btkso1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOb_0LZKr3dfvOYwxBUV_MrUGB1ep4gE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
