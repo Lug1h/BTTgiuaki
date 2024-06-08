@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <item name="etEmployeeId" type="id" />
+    <item name="etEmployeeName" type="id" />
+    <item name="etEmployeePosition" type="id" />
+    <item name="etEmployeeEmail" type="id" />
+    <item name="etEmployeePhone" type="id" />
+    <item name="ibEmployeeAvatar" type="id" />
+    <item name="etEmployeeAddress" type="id" />
+    <item name="btnSaveEmployee" type="id" />
+    <item name="edtSearchEmployee" type="id" />
+    <item name="btnPerformSearch" type="id" />
+    <item name="tvSearchResults" type="id" />
+    <item name="lv" type="id" />
+    <item name="btnSelectLogo" type="id" />
 </resources>

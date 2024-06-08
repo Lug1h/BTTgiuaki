@@ -4,43 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#f5f5f5">
+    android:background="@color/lightGray">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tìm kiếm thông tin"
+        android:text="Tìm kiếm nhân viên"
         android:textSize="24sp"
-        android:textColor="#333"
-        android:paddingBottom="24dp"/>
+        android:textColor="@color/black"
+        android:paddingBottom="16dp" />
 
     <EditText
-        android:id="@+id/etSearchQuery"
+        android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập từ khóa tìm kiếm"
+        android:hint="Nhập tên hoặc mã nhân viên"
         android:padding="12dp"
         android:background="@drawable/edit_text_background" />
 
     <Button
-        android:id="@+id/btnPerformSearch"
+        android:id="@+id/btnSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tìm kiếm"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#6200EE"
+        android:text="Tìm kiếm"
         android:textColor="#fff"
-        android:layout_marginTop="16dp" />
-
-    <TextView
-        android:id="@+id/tvSearchResults"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Kết quả tìm kiếm sẽ hiển thị ở đây"
-        android:paddingTop="16dp"
-        android:textColor="#333" />
+        android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/lv"
+        android:id="@+id/lvEmployees"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
 </LinearLayout>

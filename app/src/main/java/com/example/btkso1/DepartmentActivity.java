@@ -86,7 +86,7 @@ public class DepartmentActivity extends AppCompatActivity {
         String logoPath = logoUri != null ? logoUri.toString() : null;
 
         if (name.isEmpty() || email.isEmpty() || address.isEmpty() || phone.isEmpty()) {
-            Toast.makeText(this, "Please fill out all required fields.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng nhập thông tin của bạn!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -94,10 +94,10 @@ public class DepartmentActivity extends AppCompatActivity {
         boolean isInserted = departmentDAO.insertDepartment(department);
 
         if (isInserted) {
-            Toast.makeText(this, "Department saved successfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thành công.", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Failed to save department.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thất bại.", Toast.LENGTH_SHORT).show();
         }
     }
 }
