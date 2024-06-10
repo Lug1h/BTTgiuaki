@@ -1,6 +1,8 @@
 package com.example.btkso1;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,9 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE_REQUEST = 1;
     private EditText etEmployeeId, etEmployeeName, etEmployeePosition, etEmployeeEmail, etEmployeePhone, etEmployeeAddress;
     private Spinner spinnerDepartment;
     private Button btnSaveEmployee;
+    private ImageButton ibEmployeeAvatar;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -35,6 +40,7 @@ public class EmployeeActivity extends AppCompatActivity {
         etEmployeeAddress = findViewById(R.id.etEmployeeAddress);
         spinnerDepartment = findViewById(R.id.spinnerDepartment);
         btnSaveEmployee = findViewById(R.id.btnSaveEmployee);
+        ibEmployeeAvatar = findViewById(R.id.ibEmployeeAvatar);
 
         dbHelper = new DatabaseHelper(this);
         loadDepartmentsIntoSpinner();
@@ -45,6 +51,20 @@ public class EmployeeActivity extends AppCompatActivity {
                 saveEmployee();
             }
         });
+
+        ibEmployeeAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImageChooser();
+            }
+        });
+    }
+
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     private void loadDepartmentsIntoSpinner() {
@@ -52,7 +72,7 @@ public class EmployeeActivity extends AppCompatActivity {
         Cursor cursor = db.query(DatabaseHelper.TABLE_DEPARTMENT, null, null, null, null, null, null);
         List<String> departments = new ArrayList<>();
         while (cursor.moveToNext()) {
-            String departmentName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DEPARTMENT_NAME));
+            @SuppressLint("Range") String departmentName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DEPARTMENT_NAME));
             departments.add(departmentName);
         }
         cursor.close();
@@ -88,7 +108,7 @@ public class EmployeeActivity extends AppCompatActivity {
         Cursor cursor = db.query(DatabaseHelper.TABLE_DEPARTMENT, new String[]{DatabaseHelper.COLUMN_DEPARTMENT_ID},
                 DatabaseHelper.COLUMN_DEPARTMENT_NAME + "=?", new String[]{department}, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
-            int departmentId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_DEPARTMENT_ID));
+            @SuppressLint("Range") int departmentId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_DEPARTMENT_ID));
             values.put(DatabaseHelper.COLUMN_EMPLOYEE_DEPARTMENT_ID, departmentId);
             cursor.close();
         } else {

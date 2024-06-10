@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import android.content.ContentValues;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -136,6 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 employee.setPhone(cursor.getString(cursor.getColumnIndex(COLUMN_EMPLOYEE_PHONE)));
                 employee.setAddress(cursor.getString(cursor.getColumnIndex(COLUMN_EMPLOYEE_ADDRESS)));
                 employee.setAvatar(cursor.getString(cursor.getColumnIndex(COLUMN_EMPLOYEE_AVATAR)));
+                employee.setDepartmentId(cursor.getInt(cursor.getColumnIndex(COLUMN_EMPLOYEE_DEPARTMENT_ID))); // Thêm dòng này
                 employees.add(employee);
             } while (cursor.moveToNext());
         }
@@ -144,7 +145,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return employees;
     }
-    // Add this method to the DatabaseHelper class
+
+    // Phương thức lấy tất cả đơn vị
+    @SuppressLint("Range")
     public Collection<Department> getAllDepartments() {
         ArrayList<Department> departments = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -152,7 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                @SuppressLint("Range") Department department = new Department(
+                Department department = new Department(
                         cursor.getInt(cursor.getColumnIndex(COLUMN_DEPARTMENT_ID)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_DEPARTMENT_NAME)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_DEPARTMENT_EMAIL)),
@@ -171,4 +174,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return departments;
     }
 
+    // Phương thức lấy tên đơn vị theo mã đơn vị
+    public String getDepartmentNameById(int departmentId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_DEPARTMENT,
+                new String[]{COLUMN_DEPARTMENT_NAME},
+                COLUMN_DEPARTMENT_ID + " = ?",
+                new String[]{String.valueOf(departmentId)},
+                null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            @SuppressLint("Range") String departmentName = cursor.getString(cursor.getColumnIndex(COLUMN_DEPARTMENT_NAME));
+            cursor.close();
+            return departmentName;
+        }
+
+        return null;
+    }
 }

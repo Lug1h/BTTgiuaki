@@ -77,8 +77,10 @@
             android:src="@drawable/default_avatar_background"
             android:contentDescription="@string/avatar"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop" />
-
+            android:scaleType="centerCrop"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="16dp" />
 
         <EditText
             android:id="@+id/etEmployeeAddress"
