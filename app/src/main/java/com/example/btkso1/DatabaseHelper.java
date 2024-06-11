@@ -136,7 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 employee.setPhone(cursor.getString(cursor.getColumnIndex(COLUMN_EMPLOYEE_PHONE)));
                 employee.setAddress(cursor.getString(cursor.getColumnIndex(COLUMN_EMPLOYEE_ADDRESS)));
                 employee.setAvatar(cursor.getString(cursor.getColumnIndex(COLUMN_EMPLOYEE_AVATAR)));
-                employee.setDepartmentId(cursor.getInt(cursor.getColumnIndex(COLUMN_EMPLOYEE_DEPARTMENT_ID))); // Thêm dòng này
+                employee.setDepartmentId(cursor.getInt(cursor.getColumnIndex(COLUMN_EMPLOYEE_DEPARTMENT_ID)));
                 employees.add(employee);
             } while (cursor.moveToNext());
         }
@@ -175,6 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Phương thức lấy tên đơn vị theo mã đơn vị
+    @SuppressLint("Range")
     public String getDepartmentNameById(int departmentId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_DEPARTMENT,
@@ -185,11 +186,95 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null) {
             cursor.moveToFirst();
-            @SuppressLint("Range") String departmentName = cursor.getString(cursor.getColumnIndex(COLUMN_DEPARTMENT_NAME));
+            String departmentName = cursor.getString(cursor.getColumnIndex(COLUMN_DEPARTMENT_NAME));
             cursor.close();
             return departmentName;
         }
 
         return null;
+    }
+
+    // Phương thức thêm nhân viên
+    public long addEmployee(Employee employee) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EMPLOYEE_NAME, employee.getName());
+        values.put(COLUMN_EMPLOYEE_POSITION, employee.getPosition());
+        values.put(COLUMN_EMPLOYEE_EMAIL, employee.getEmail());
+        values.put(COLUMN_EMPLOYEE_PHONE, employee.getPhone());
+        values.put(COLUMN_EMPLOYEE_ADDRESS, employee.getAddress());
+        values.put(COLUMN_EMPLOYEE_AVATAR, employee.getAvatar());
+        values.put(COLUMN_EMPLOYEE_DEPARTMENT_ID, employee.getDepartmentId());
+
+        long result = db.insert(TABLE_EMPLOYEE, null, values);
+        db.close();
+        return result;
+    }
+
+    // Phương thức cập nhật thông tin nhân viên
+    public int updateEmployee(Employee employee) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EMPLOYEE_NAME, employee.getName());
+        values.put(COLUMN_EMPLOYEE_POSITION, employee.getPosition());
+        values.put(COLUMN_EMPLOYEE_EMAIL, employee.getEmail());
+        values.put(COLUMN_EMPLOYEE_PHONE, employee.getPhone());
+        values.put(COLUMN_EMPLOYEE_ADDRESS, employee.getAddress());
+        values.put(COLUMN_EMPLOYEE_AVATAR, employee.getAvatar());
+        values.put(COLUMN_EMPLOYEE_DEPARTMENT_ID, employee.getDepartmentId());
+
+        int result = db.update(TABLE_EMPLOYEE, values, COLUMN_EMPLOYEE_ID + " = ?", new String[]{String.valueOf(employee.getId())});
+        db.close();
+        return result;
+    }
+
+    // Phương thức xóa nhân viên
+    public int deleteEmployee(int employeeId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(TABLE_EMPLOYEE, COLUMN_EMPLOYEE_ID + " = ?", new String[]{String.valueOf(employeeId)});
+        db.close();
+        return result;
+    }
+
+    // Phương thức thêm đơn vị
+    public long addDepartment(Department department) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DEPARTMENT_NAME, department.getName());
+        values.put(COLUMN_DEPARTMENT_EMAIL, department.getEmail());
+        values.put(COLUMN_DEPARTMENT_WEBSITE, department.getWebsite());
+        values.put(COLUMN_DEPARTMENT_LOGO, department.getLogoPath());
+        values.put(COLUMN_DEPARTMENT_ADDRESS, department.getAddress());
+        values.put(COLUMN_DEPARTMENT_PHONE, department.getPhone());
+        values.put(COLUMN_DEPARTMENT_PARENT_ID, department.getParentId());
+
+        long result = db.insert(TABLE_DEPARTMENT, null, values);
+        db.close();
+        return result;
+    }
+
+    // Phương thức cập nhật thông tin đơn vị
+    public int updateDepartment(Department department) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DEPARTMENT_NAME, department.getName());
+        values.put(COLUMN_DEPARTMENT_EMAIL, department.getEmail());
+        values.put(COLUMN_DEPARTMENT_WEBSITE, department.getWebsite());
+        values.put(COLUMN_DEPARTMENT_LOGO, department.getLogoPath());
+        values.put(COLUMN_DEPARTMENT_ADDRESS, department.getAddress());
+        values.put(COLUMN_DEPARTMENT_PHONE, department.getPhone());
+        values.put(COLUMN_DEPARTMENT_PARENT_ID, department.getParentId());
+
+        int result = db.update(TABLE_DEPARTMENT, values, COLUMN_DEPARTMENT_ID + " = ?", new String[]{String.valueOf(department.getId())});
+        db.close();
+        return result;
+    }
+
+    // Phương thức xóa đơn vị
+    public int deleteDepartment(int departmentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(TABLE_DEPARTMENT, COLUMN_DEPARTMENT_ID + " = ?", new String[]{String.valueOf(departmentId)});
+        db.close();
+        return result;
     }
 }

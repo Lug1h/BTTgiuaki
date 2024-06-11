@@ -5,7 +5,10 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,8 +17,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +31,7 @@ public class EmployeeActivity extends AppCompatActivity {
     private Button btnSaveEmployee;
     private ImageButton ibEmployeeAvatar;
     private DatabaseHelper dbHelper;
+    private Uri avatarUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,24 @@ public class EmployeeActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Chọn Ảnh"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            avatarUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), avatarUri);
+                // Scale bitmap để vừa với ImageButton
+                int dimension = Math.min(bitmap.getWidth(), bitmap.getHeight());
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, dimension, dimension, false);
+                ibEmployeeAvatar.setImageBitmap(scaledBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void loadDepartmentsIntoSpinner() {
@@ -89,6 +112,7 @@ public class EmployeeActivity extends AppCompatActivity {
         String phone = etEmployeePhone.getText().toString().trim();
         String address = etEmployeeAddress.getText().toString().trim();
         String department = spinnerDepartment.getSelectedItem().toString();
+        String avatarPath = avatarUri != null ? avatarUri.toString() : null;
 
         if (id.isEmpty() || name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
@@ -102,6 +126,7 @@ public class EmployeeActivity extends AppCompatActivity {
         values.put(DatabaseHelper.COLUMN_EMPLOYEE_EMAIL, email);
         values.put(DatabaseHelper.COLUMN_EMPLOYEE_PHONE, phone);
         values.put(DatabaseHelper.COLUMN_EMPLOYEE_ADDRESS, address);
+        values.put(DatabaseHelper.COLUMN_EMPLOYEE_AVATAR, avatarPath);
 
         // Lấy ID của phòng ban từ tên phòng ban
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -122,7 +147,12 @@ public class EmployeeActivity extends AppCompatActivity {
             Toast.makeText(this, "Lưu thông tin nhân viên thành công!", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Lưu thông tin nhân viên thất bại!", Toast.LENGTH_SHORT).show();
+            // Hiển thị thông tin debug khi lưu thất bại
+            StringBuilder debugInfo = new StringBuilder("Lưu thất bại với các giá trị:\n");
+            for (String key : values.keySet()) {
+                debugInfo.append(key).append(": ").append(values.getAsString(key)).append("\n");
+            }
+            Toast.makeText(this, debugInfo.toString(), Toast.LENGTH_LONG).show();
         }
     }
 }
